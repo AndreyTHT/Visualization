@@ -22,14 +22,11 @@ namespace Visualization
             NamePicture.Text = "";
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         ushort[,] data;
         int h, w; // создаем переменные высоту h и ширину w изображения
-        int s; // переменная, которая будет хранить информацию о выбранном сдвиге
+        byte s = 0; // переменная, которая будет хранить информацию о выбранном сдвиге
+
+        Bitmap bitmap;
         private void Loading_Click(object sender, EventArgs e)
         {
             // Создаем новый экземпляр OpenFileDialog
@@ -49,35 +46,19 @@ namespace Visualization
 
                 data = readFile(filePath); //функция для побайтового чтения файла
 
-                Bitmap bitmap = new Bitmap(w, h);
-                
-                // Заполнение каждого пикселя значениями RGB
-                for (int x = 0; x < w; x++)
-                {
-                    for (int y = 0; y < h; y++)
-                    {
-                        // Генерация цвета пикселя
-                        // Например, создадим градиентный переход по RGB
-                        int rgb = shiftPix(data[x, y], 0);
-                        // Установка цвета пикселя в bitmap
-                        Color pixelColor = Color.FromArgb(rgb, rgb, rgb);
-                        bitmap.SetPixel(x, y, pixelColor);
-                    }
-                }
-
-                // Устанавливаем bitmap как изображение для PictureBox
-                pictureBox1.Image = bitmap;
+                bitmap = new Bitmap(w, h);
+                shift_box();
 
             }
 
         }
 
-        private int shiftPix(int x, int s)
+        private byte shiftPix(ushort x)
         {
-            x = x & 0x3FF;
-            x = x >> s;
-            x = x & 0xFF;
-            return x;
+            x = (ushort)(x & 0x3FF);
+            x = (ushort)(x >> s);
+            x = (ushort)(x & 0xFF);
+            return (byte)x;
         }
 
         private ushort[,] readFile(string filePath)  //реализация функции для побайтового чтения файла
@@ -104,22 +85,6 @@ namespace Visualization
                 return data;
             }
         }
-
-        private void NamePicture_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void X_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             // Получаем координаты курсора относительно PictureBox
@@ -128,40 +93,22 @@ namespace Visualization
 
             // Обновляем TextBox с координатами
             X.Text = $"{x}";
-            XM.Text = $"{x}";
             Y.Text = $"{y}";
             if (pictureBox1.Image != null)
             {
-                bright.Text = $"{shiftPix(data[x, y], s)}";
+                bright.Text = $"{shiftPix(data[x, y])}";
             }
         }
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void shift_box()
         {
-        }
-        private void shift_box(object sender, EventArgs e)
-        {
-            s = 0;
 
-            Bitmap bitmap = new Bitmap(w, h);
-            if (Shift0.Checked)
-            {
-                s = 0;
-            }
-            else if (Shift1.Checked)
-            {
-                s = 1;
-            }
-            else
-            {
-                s = 2;
-            }
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
                     // Генерация цвета пикселя
                     // Например, создадим градиентный переход по RGB
-                    int rgb = shiftPix(data[x, y], s);
+                    byte rgb = shiftPix(data[x, y]);
                     // Установка цвета пикселя в bitmap
                     Color pixelColor = Color.FromArgb(rgb, rgb, rgb);
                     bitmap.SetPixel(x, y, pixelColor);
@@ -173,18 +120,21 @@ namespace Visualization
 
         private void Shift0_CheckedChanged(object sender, EventArgs e)
         {
-            shift_box(sender, e);
+            s = 0;
+            shift_box();
         }
 
         private void Shift1_CheckedChanged(object sender, EventArgs e)
         {
-            shift_box(sender, e);
+            s = 1;
+            shift_box();
         }
 
-        private void panel2_Scroll(object sender, ScrollEventArgs e)
+        private void Shift2_CheckedChanged(object sender, EventArgs e)
         {
+            s = 2;
+            shift_box();
         }
-
         private void scrollStep_ValueChanged(object sender, EventArgs e)
         {
 
@@ -194,11 +144,6 @@ namespace Visualization
             // Устанавливаем шаг прокрутки вручную
             panel2.VerticalScroll.SmallChange = scrollS;
             panel2.HorizontalScroll.SmallChange = scrollS;
-        }
-
-        private void Shift2_CheckedChanged(object sender, EventArgs e)
-        {
-            shift_box(sender, e);
         }
     }
 }
