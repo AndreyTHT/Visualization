@@ -61,6 +61,9 @@ namespace Visualization
 
             }
 
+            Interpolate.Enabled = true;
+            Normalize.Enabled = true;
+
         }
 
         private byte shiftPix(ushort x)
@@ -106,35 +109,35 @@ namespace Visualization
             Y.Text = $"{y}";
             if (pictureBox1.Image != null)
             {
+                bright.Text = $"{shiftPix(data[x, y])}";
+                brightnessFactor = (byte)brightnessTrackBar.Value;
+                m = zoomTrackBar.Value;
+                z = pixelColv.Value;
+                loupaPixel = new ushort[z, z];
+                zoomLoup = new Bitmap(z * m, z * m);
+
+                for (int i = 0; i < z; i++)
+                {
+                    for (int j = 0; j < z; j++)
+                    {
+                        loupaPixel[i, j] = data[x + i, y + j];
+                    }
+                }
+
                 if (Interpolate.Checked)
                 {
-                    
+                    createINT(x,y);
                 }
                 else
                 {
-                    bright.Text = $"{shiftPix(data[x, y])}";
-                    brightnessFactor = (byte)brightnessTrackBar.Value;
-                    m = zoomTrackBar.Value;
-                    z = pixelColv.Value;
-                    loupaPixel = new ushort[z, z];
-                    zoomLoup = new Bitmap(z * m, z * m);
-
-                    for (int i = 0; i < z; i++)
-                    {
-                        for (int j = 0; j < z; j++)
-                        {
-                            loupaPixel[i, j] = data[x + i, y + j];
-                        }
-                    }
-
-                    createZL();
+                    createMBS();
                 }
             }
         }
 
 
 
-        private void createZL()
+        private void createMBS()
         {
             ushort k;
             for (int i = 0; i < z; i++)
@@ -164,9 +167,48 @@ namespace Visualization
             Loupe.Image = zoomLoup;
         }
 
+        private void createINT(int x, int y)
+        {
+            for(int i = x;i < z+x; i++)
+            {
+                for(int j = y; j < z+y; j++)
+                {
+                    ushort I1 = data[i, j];
+                    ushort I2 = data[i, j + 1];
+                    ushort I3 = data[i + 1, j];
+                    ushort I4 = data[i + 1, j + 1];
+
+                    int d = I1;
+                    int a = I2 - d;
+                    int b = I3 - d;
+                    int c = I4 - a - b - d;
+
+                    for (int x1 = 0; x1 < m; x1++)
+                    {
+                        for (int y1 = 0; y1 < m; y1++)
+                        {
+                            // Вычисляем положение в новом массиве 15x15
+                            int newX = (i-x) * m + x1;
+                            int newY = (j-y) * m + y1;
+
+                            ushort k = (ushort)(a * newX- + b * y1 + c * x1 * y1 + d);
+
+                            // Генерация цвета пикселя
+                            byte rgb = shiftPix(k);
+
+                            // Установка цвета пикселя в bitmap
+                            Color pixelColor = Color.FromArgb(rgb, rgb, rgb);
+                            zoomLoup.SetPixel(newX, newY, pixelColor);
+                        }
+                    }
+                }
+            }
+
+            Loupe.Image = zoomLoup;
+        }
+
         private void shift_box()
         {
-
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)

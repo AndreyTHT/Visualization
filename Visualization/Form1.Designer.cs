@@ -125,6 +125,7 @@
             // Normalize
             // 
             this.Normalize.AutoSize = true;
+            this.Normalize.Enabled = false;
             this.Normalize.Location = new System.Drawing.Point(18, 19);
             this.Normalize.Name = "Normalize";
             this.Normalize.Size = new System.Drawing.Size(139, 17);
@@ -145,6 +146,7 @@
             // Interpolate
             // 
             this.Interpolate.AutoSize = true;
+            this.Interpolate.Enabled = false;
             this.Interpolate.Location = new System.Drawing.Point(18, 48);
             this.Interpolate.Name = "Interpolate";
             this.Interpolate.Size = new System.Drawing.Size(116, 17);
