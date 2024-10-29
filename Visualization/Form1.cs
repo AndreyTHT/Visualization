@@ -29,8 +29,13 @@ namespace Visualization
 
         Bitmap bitmap;
         Bitmap zoomLoup;
-        byte m = 5;
-        byte[] loupaPixel;    
+
+        int z; //область увеличения в пикселях
+        int m; //увеличение
+        byte brightnessFactor;
+        ushort[,] loupaPixel;
+
+        ushort[,,,] loupa;
 
         private void Loading_Click(object sender, EventArgs e)
         {
@@ -79,6 +84,7 @@ namespace Visualization
                 w = reader.ReadUInt16();  // Аналогично, читаем 2 байта
 
                 data = new ushort[w, h];
+                
                 // Чтение данных в массив ushort
                 for (int i = 0; i < w; i++)
                 {
@@ -95,36 +101,62 @@ namespace Visualization
             // Получаем координаты курсора относительно PictureBox
             int x = e.X;
             int y = e.Y;
-            loupaPixel = new byte[4];
             // Обновляем TextBox с координатами
             X.Text = $"{x}";
             Y.Text = $"{y}";
             if (pictureBox1.Image != null)
             {
-                bright.Text = $"{shiftPix(data[x, y])}";
+                if (Interpolate.Checked)
+                {
+                    
+                }
+                else
+                {
+                    bright.Text = $"{shiftPix(data[x, y])}";
+                    brightnessFactor = (byte)brightnessTrackBar.Value;
+                    m = zoomTrackBar.Value;
+                    z = pixelColv.Value;
+                    loupaPixel = new ushort[z, z];
+                    zoomLoup = new Bitmap(z * m, z * m);
+
+                    for (int i = 0; i < z; i++)
+                    {
+                        for (int j = 0; j < z; j++)
+                        {
+                            loupaPixel[i, j] = data[x + i, y + j];
+                        }
+                    }
+
+                    createZL();
+                }
             }
-
-            loupaPixel[0] = shiftPix(data[x,y]);
-            loupaPixel[1] = shiftPix(data[x,y+1]);
-            loupaPixel[2] = shiftPix(data[x+1,y]);
-            loupaPixel[3] = shiftPix(data[x+1,y+1]);
-
-            createZL();
         }
+
+
 
         private void createZL()
         {
-            zoomLoup = new Bitmap(10, 10);
-
-            for (int i = 0; i < 4 ; i++)
+            ushort k;
+            for (int i = 0; i < z; i++)
             {
-                for(int y = 0; y < 5 ; y++)
+                for (int j = 0; j < z; j++)
                 {
-                    for(int x = 0; x < 5 ; x++)
+                    k = loupaPixel[i, j];
+                    for (int x = 0; x < m; x++)
                     {
-                        byte rgb = loupaPixel[i];
-                        Color pixelColor = Color.FromArgb(rgb, rgb, rgb);
-                        zoomLoup.SetPixel(x+x*i,y+y*i, pixelColor);
+                        for (int y = 0; y < m; y++)
+                        {
+                            // Вычисляем положение в новом массиве 15x15
+                            int newX = i * m + x;
+                            int newY = j * m + y;
+
+                            // Генерация цвета пикселя
+                            byte rgb = shiftPix(k);
+
+                            // Установка цвета пикселя в bitmap
+                            Color pixelColor = Color.FromArgb(rgb, rgb, rgb);
+                            zoomLoup.SetPixel(newX, newY, pixelColor);
+                        }
                     }
                 }
             }
@@ -168,7 +200,10 @@ namespace Visualization
             shift_box();
         }
 
-
+        private void Interpolate_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
 
         private void scrollStep_ValueChanged(object sender, EventArgs e)
         {

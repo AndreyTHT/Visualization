@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.panel = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.brightnessTrackBar = new System.Windows.Forms.TrackBar();
+            this.zoomTrackBar = new System.Windows.Forms.TrackBar();
+            this.Normalize = new System.Windows.Forms.CheckBox();
+            this.Loupe = new System.Windows.Forms.PictureBox();
+            this.Interpolate = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.scrollStep = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -42,9 +48,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.NamePicture = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Shift2 = new System.Windows.Forms.RadioButton();
             this.Shift1 = new System.Windows.Forms.RadioButton();
@@ -53,22 +56,20 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Loading = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.Normalize = new System.Windows.Forms.CheckBox();
-            this.Loupe = new System.Windows.Forms.PictureBox();
-            this.Interpolate = new System.Windows.Forms.CheckBox();
+            this.pixelColv = new System.Windows.Forms.TrackBar();
             this.panel.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.brightnessTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Loupe)).BeginInit();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scrollStep)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Loupe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pixelColv)).BeginInit();
             this.SuspendLayout();
             // 
             // panel
@@ -77,7 +78,6 @@
             this.panel.Controls.Add(this.groupBox5);
             this.panel.Controls.Add(this.groupBox4);
             this.panel.Controls.Add(this.groupBox3);
-            this.panel.Controls.Add(this.groupBox2);
             this.panel.Controls.Add(this.groupBox1);
             this.panel.Controls.Add(this.panel2);
             this.panel.Controls.Add(this.Loading);
@@ -85,8 +85,73 @@
             this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Margin = new System.Windows.Forms.Padding(2);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(1348, 523);
+            this.panel.Size = new System.Drawing.Size(1684, 655);
             this.panel.TabIndex = 0;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.pixelColv);
+            this.groupBox6.Controls.Add(this.brightnessTrackBar);
+            this.groupBox6.Controls.Add(this.zoomTrackBar);
+            this.groupBox6.Controls.Add(this.Normalize);
+            this.groupBox6.Controls.Add(this.Loupe);
+            this.groupBox6.Controls.Add(this.Interpolate);
+            this.groupBox6.Location = new System.Drawing.Point(945, 24);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(727, 619);
+            this.groupBox6.TabIndex = 18;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Инструмент «Лупа»";
+            // 
+            // brightnessTrackBar
+            // 
+            this.brightnessTrackBar.Location = new System.Drawing.Point(18, 568);
+            this.brightnessTrackBar.Maximum = 100;
+            this.brightnessTrackBar.Name = "brightnessTrackBar";
+            this.brightnessTrackBar.Size = new System.Drawing.Size(323, 45);
+            this.brightnessTrackBar.TabIndex = 21;
+            this.brightnessTrackBar.Value = 50;
+            // 
+            // zoomTrackBar
+            // 
+            this.zoomTrackBar.Location = new System.Drawing.Point(18, 471);
+            this.zoomTrackBar.Maximum = 5;
+            this.zoomTrackBar.Minimum = 1;
+            this.zoomTrackBar.Name = "zoomTrackBar";
+            this.zoomTrackBar.Size = new System.Drawing.Size(327, 45);
+            this.zoomTrackBar.TabIndex = 20;
+            this.zoomTrackBar.Value = 2;
+            // 
+            // Normalize
+            // 
+            this.Normalize.AutoSize = true;
+            this.Normalize.Location = new System.Drawing.Point(18, 19);
+            this.Normalize.Name = "Normalize";
+            this.Normalize.Size = new System.Drawing.Size(139, 17);
+            this.Normalize.TabIndex = 19;
+            this.Normalize.Text = "Нормировать яркость";
+            this.Normalize.UseVisualStyleBackColor = true;
+            // 
+            // Loupe
+            // 
+            this.Loupe.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Loupe.Location = new System.Drawing.Point(18, 80);
+            this.Loupe.Name = "Loupe";
+            this.Loupe.Size = new System.Drawing.Size(349, 182);
+            this.Loupe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Loupe.TabIndex = 0;
+            this.Loupe.TabStop = false;
+            // 
+            // Interpolate
+            // 
+            this.Interpolate.AutoSize = true;
+            this.Interpolate.Location = new System.Drawing.Point(18, 48);
+            this.Interpolate.Name = "Interpolate";
+            this.Interpolate.Size = new System.Drawing.Size(116, 17);
+            this.Interpolate.TabIndex = 18;
+            this.Interpolate.Text = "Интерполировать";
+            this.Interpolate.UseVisualStyleBackColor = true;
+            this.Interpolate.CheckedChanged += new System.EventHandler(this.Interpolate_CheckedChanged);
             // 
             // groupBox5
             // 
@@ -256,60 +321,13 @@
             this.NamePicture.TabIndex = 0;
             this.NamePicture.Text = "label1";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.numericUpDown1);
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(488, 24);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(232, 58);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Верхние строки изображений:";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 24);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(49, 23);
-            this.numericUpDown1.TabIndex = 10;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(69, 17);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 36);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "<- задать";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Shift2);
             this.groupBox1.Controls.Add(this.Shift1);
             this.groupBox1.Controls.Add(this.Shift0);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(355, 24);
+            this.groupBox1.Location = new System.Drawing.Point(482, 24);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -392,78 +410,47 @@
             this.Loading.UseVisualStyleBackColor = true;
             this.Loading.Click += new System.EventHandler(this.Loading_Click);
             // 
-            // groupBox6
+            // pixelColv
             // 
-            this.groupBox6.Controls.Add(this.Normalize);
-            this.groupBox6.Controls.Add(this.Loupe);
-            this.groupBox6.Controls.Add(this.Interpolate);
-            this.groupBox6.Location = new System.Drawing.Point(945, 24);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(379, 297);
-            this.groupBox6.TabIndex = 18;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Инструмент «Лупа»";
-            // 
-            // Normalize
-            // 
-            this.Normalize.AutoSize = true;
-            this.Normalize.Location = new System.Drawing.Point(18, 19);
-            this.Normalize.Name = "Normalize";
-            this.Normalize.Size = new System.Drawing.Size(139, 17);
-            this.Normalize.TabIndex = 19;
-            this.Normalize.Text = "Нормировать яркость";
-            this.Normalize.UseVisualStyleBackColor = true;
-            // 
-            // Loupe
-            // 
-            this.Loupe.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Loupe.Location = new System.Drawing.Point(18, 80);
-            this.Loupe.Name = "Loupe";
-            this.Loupe.Size = new System.Drawing.Size(349, 182);
-            this.Loupe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.Loupe.TabIndex = 0;
-            this.Loupe.TabStop = false;
-            // 
-            // Interpolate
-            // 
-            this.Interpolate.AutoSize = true;
-            this.Interpolate.Location = new System.Drawing.Point(18, 48);
-            this.Interpolate.Name = "Interpolate";
-            this.Interpolate.Size = new System.Drawing.Size(116, 17);
-            this.Interpolate.TabIndex = 18;
-            this.Interpolate.Text = "Интерполировать";
-            this.Interpolate.UseVisualStyleBackColor = true;
+            this.pixelColv.Location = new System.Drawing.Point(18, 517);
+            this.pixelColv.Maximum = 100;
+            this.pixelColv.Minimum = 4;
+            this.pixelColv.Name = "pixelColv";
+            this.pixelColv.Size = new System.Drawing.Size(323, 45);
+            this.pixelColv.TabIndex = 22;
+            this.pixelColv.Value = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1348, 523);
+            this.ClientSize = new System.Drawing.Size(1684, 655);
             this.Controls.Add(this.panel);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1500, 562);
+            this.MaximumSize = new System.Drawing.Size(1700, 800);
             this.MinimumSize = new System.Drawing.Size(932, 562);
             this.Name = "Form1";
             this.Text = "Visualization";
             this.panel.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.brightnessTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Loupe)).EndInit();
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scrollStep)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Loupe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pixelColv)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -472,7 +459,6 @@
 
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.Button Loading;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label4;
@@ -483,14 +469,12 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.RadioButton Shift2;
         private System.Windows.Forms.RadioButton Shift1;
         private System.Windows.Forms.RadioButton Shift0;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label NamePicture;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.NumericUpDown scrollStep;
@@ -499,6 +483,9 @@
         private System.Windows.Forms.CheckBox Normalize;
         private System.Windows.Forms.PictureBox Loupe;
         private System.Windows.Forms.CheckBox Interpolate;
+        private System.Windows.Forms.TrackBar zoomTrackBar;
+        private System.Windows.Forms.TrackBar brightnessTrackBar;
+        private System.Windows.Forms.TrackBar pixelColv;
     }
 }
 
