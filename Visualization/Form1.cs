@@ -29,13 +29,11 @@ namespace Visualization
 
         Bitmap bitmap;
         Bitmap zoomLoup;
+        Bitmap review;
 
         int z; //область увеличения в пикселях
         int m; //увеличение
-        byte brightnessFactor;
         ushort[,] loupaPixel;
-
-        ushort[,,,] loupa;
 
         private void Loading_Click(object sender, EventArgs e)
         {
@@ -64,6 +62,43 @@ namespace Visualization
             Interpolate.Enabled = true;
             Normalize.Enabled = true;
 
+            createPicReview();
+
+        }
+
+        private void createPicReview()
+        {
+            int mini = 4;
+            review = new Bitmap(w/mini, h/mini);
+
+            for(int i = 0; i < w / mini; i++)
+            {
+                for (int j = 0; j < h / mini; j++)
+                {
+                    ushort k = 0;
+                    for(int x = 0; x < mini; x++)
+                    {
+                        for (int y = 0; y < mini; y++)
+                        {
+                            k = (ushort)(k + data[i*mini + x, j*mini + y]);
+                        }
+                    }
+                    k = (ushort)(k / mini);
+                    // Генерация цвета пикселя
+
+                    k = (ushort)(k & 0x3FF);
+                    k = (ushort)(k >> 3);
+                    k = (ushort)(k & 0xFF);
+
+                    byte rgb = (byte)k;
+
+                    // Установка цвета пикселя в bitmap
+                    Color pixelColor = Color.FromArgb(rgb, rgb, rgb);
+                    review.SetPixel(i, j, pixelColor);
+                }
+            }
+
+            picReview.Image = review;
         }
 
         private byte shiftPix(ushort x)
@@ -110,7 +145,6 @@ namespace Visualization
             if (pictureBox1.Image != null)
             {
                 bright.Text = $"{shiftPix(data[x, y])}";
-                brightnessFactor = (byte)brightnessTrackBar.Value;
                 m = zoomTrackBar.Value;
                 z = pixelColv.Value;
                 loupaPixel = new ushort[z, z];
@@ -120,7 +154,13 @@ namespace Visualization
                 {
                     for (int j = 0; j < z; j++)
                     {
-                        loupaPixel[i, j] = data[x + i, y + j];
+                        try
+                        {
+                            loupaPixel[i, j] = data[x + i, y + j];
+                        } catch (Exception ex)
+                        {
+                            loupaPixel[i, j] = 0;
+                        }
                     }
                 }
 
@@ -149,7 +189,7 @@ namespace Visualization
                     {
                         for (int y = 0; y < m; y++)
                         {
-                            // Вычисляем положение в новом массиве 15x15
+                            // Вычисляем положение в новом массиве
                             int newX = i * m + x;
                             int newY = j * m + y;
 
@@ -191,7 +231,7 @@ namespace Visualization
                             int newX = (i-x) * m + x1;
                             int newY = (j-y) * m + y1;
 
-                            ushort k = (ushort)(a * newX- + b * y1 + c * x1 * y1 + d);
+                            ushort k = (ushort)(a * x1/m+ b * y1/m + c * x1/m * y1/m + d);
 
                             // Генерация цвета пикселя
                             byte rgb = shiftPix(k);
@@ -245,6 +285,11 @@ namespace Visualization
         private void Interpolate_CheckedChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void scrollStep_ValueChanged(object sender, EventArgs e)
