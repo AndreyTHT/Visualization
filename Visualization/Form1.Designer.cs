@@ -139,7 +139,6 @@
             this.label2.Size = new System.Drawing.Size(164, 20);
             this.label2.TabIndex = 20;
             this.label2.Text = "Область пикселей";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -235,7 +234,6 @@
             this.Interpolate.TabIndex = 18;
             this.Interpolate.Text = "Интерполировать";
             this.Interpolate.UseVisualStyleBackColor = true;
-            this.Interpolate.CheckedChanged += new System.EventHandler(this.Interpolate_CheckedChanged);
             // 
             // groupBox5
             // 
@@ -395,9 +393,8 @@
             this.NamePicture.AutoSize = true;
             this.NamePicture.Location = new System.Drawing.Point(12, 26);
             this.NamePicture.Name = "NamePicture";
-            this.NamePicture.Size = new System.Drawing.Size(53, 20);
+            this.NamePicture.Size = new System.Drawing.Size(0, 20);
             this.NamePicture.TabIndex = 0;
-            this.NamePicture.Text = "label1";
             // 
             // groupBox1
             // 

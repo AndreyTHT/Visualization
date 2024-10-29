@@ -157,7 +157,7 @@ namespace Visualization
                         try
                         {
                             loupaPixel[i, j] = data[x + i, y + j];
-                        } catch (Exception ex)
+                        } catch (Exception)
                         {
                             loupaPixel[i, j] = 0;
                         }
@@ -280,16 +280,6 @@ namespace Visualization
         {
             s = 2;
             shift_box();
-        }
-
-        private void Interpolate_CheckedChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void scrollStep_ValueChanged(object sender, EventArgs e)
